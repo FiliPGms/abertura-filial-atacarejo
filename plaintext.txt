@@ -1,54 +1,58 @@
-Você é um Engenheiro de Dados e Desenvolvedor Python sênior. Sua missão é criar um Dashboard Executivo interativo utilizando Streamlit, Pandas e Plotly para analisar a viabilidade de entrada/expansão de uma rede de Atacarejo (referência: Grupo Mateus) em São Luís do Maranhão.
+Você é um Engenheiro de Dados e Desenvolvedor Python sênior. Sua missão é criar um Dashboard Executivo interativo utilizando Streamlit, Pandas e Plotly, cumprindo RIGOROSAMENTE todos os critérios de um edital universitário de análise de viabilidade de negócios (Atacarejo em São Luís - MA).
 
 ### 1. FONTE DE DADOS
-Os dados devem ser carregados a partir de um arquivo chamado exatamente "dados.txt", que está formatado como CSV (separado por vírgulas).
-A estrutura exata das colunas em `dados.txt` é:
-`bairro, zona, populacao_estimada, renda_media_mensal, qtd_concorrentes_diretos, custo_m2_aluguel, distancia_cd_km, fluxo_veiculos, ticket_medio_estimado, clientes_mes_estimado, faturamento_bruto_mensal, investimento_inicial_milhoes`
+Carregue os dados do arquivo "dados.txt" (formato CSV).
+Estrutura: `bairro, zona, populacao_estimada, renda_media_mensal, qtd_concorrentes_diretos, custo_m2_aluguel, distancia_cd_km, fluxo_veiculos, ticket_medio_estimado, clientes_mes_estimado, faturamento_bruto_mensal, investimento_inicial_milhoes`
+Use `pd.read_csv("dados.txt")`.
 
-Use `pd.read_csv("dados.txt")` para carregar o DataFrame.
+### 2. REGRAS DE NEGÓCIO E CÁLCULOS FINANCEIROS (Obrigatório)
+Crie as seguintes colunas/variáveis calculadas no Pandas antes de renderizar a UI:
+- `receita_anual_estimada`: faturamento_bruto_mensal * 12
+- `custo_variavel_estimado`: 80% do faturamento mensal (compra de mercadorias, impostos diretos).
+- `custo_fixo_estimado`: 5% do faturamento mensal (folha, energia, segurança, aluguel).
+- `lucro_liquido_mensal`: faturamento_bruto_mensal - custo_variavel_estimado - custo_fixo_estimado (representando 15% de margem).
+- `ponto_de_equilibrio_mensal` (Break-even): custo_fixo_estimado / (1 - (custo_variavel_estimado / faturamento_bruto_mensal)).
+- `payback_meses`: (investimento_inicial_milhoes * 1000000) / lucro_liquido_mensal.
+- `viabilidade`: 
+  - "Viável": payback <= 45 e qtd_concorrentes <= 5.
+  - "Parcialmente Viável": payback entre 46 e 60, OU fluxo_veiculos == "Alto" com alta concorrência.
+  - "Inviável": payback > 60.
 
-### 2. REGRAS DE NEGÓCIO E CÁLCULOS FINANCEIROS
-No Pandas, crie as seguintes colunas calculadas antes de renderizar a interface:
-- `lucro_liquido_estimado`: Considere uma margem de contribuição média de 15% sobre o `faturamento_bruto_mensal` (Faturamento * 0.15).
-- `payback_meses`: Cálculo do tempo de retorno do investimento (`investimento_inicial_milhoes` * 1.000.000 / `lucro_liquido_estimado`).
-- `classificacao_viabilidade`: Aplique uma regra condicional automática baseada nos dados:
-  - "Viável": Se `payback_meses` <= 45 e `qtd_concorrentes_diretos` <= 5.
-  - "Parcialmente Viável": Se `payback_meses` entre 46 e 60, OU se `fluxo_veiculos` for "Alto".
-  - "Inviável": Se `payback_meses` > 60 ou custo/concorrência excessivos.
+### 3. ESTRUTURA DO DASHBOARD STREAMLIT (Siga a ordem exata)
 
-### 3. ESTRUTURA E DESIGN DO DASHBOARD (STREAMLIT)
-O layout deve ser limpo, executivo e otimizado para exportação em PDF (evite excesso de caixas de rolagem aninhadas). Organize nas seguintes seções:
+#### A. Identificação do Negócio e Público-Alvo (Itens 102 e 103)
+- Use `st.title` e `st.markdown`.
+- **Ramo:** Varejo Alimentar e Atacarejo.
+- **Empresa-Modelo:** Grupo Mateus / Mix Mateus.
+- **Público-Alvo:** Famílias (consumo essencial mensal), pequenos comerciantes, lanchonetes e transformadores que buscam preço competitivo e grandes volumes.
 
-#### A. Cabeçalho e Contextualização
-- Título: Análise de Viabilidade de Expansão - Atacarejo (São Luís - MA)
-- Subtítulo explicativo sobre o foco no consumo das famílias, volume e logística de abastecimento.
-- Filtro lateral (Sidebar): Permita filtrar os dados por `zona` ou selecionar um `bairro` específico para análise detalhada.
+#### B. Indicadores Financeiros Globais (KPI Cards - Item 107 e 87-97)
+- Permita filtrar por "Bairro" via Sidebar. Ao selecionar, mostre em `st.columns`:
+  1. Investimento Inicial (R$)
+  2. Receita Anual Estimada (R$)
+  3. Ponto de Equilíbrio Mensal (R$)
+  4. Ticket Médio (R$)
+  5. Payback (Meses)
 
-#### B. Cartões de Indicadores (KPI Cards - `st.metric`)
-Exiba em linha (usando `st.columns`):
-- Faturamento Bruto Médio Projetado (R$)
-- Ticket Médio da Cidade (R$)
-- Investimento Inicial Média (R$ Milhões)
-- Payback Médio Estimado (Meses)
+#### C. Gráficos Analíticos (Plotly - Itens 105 e 106)
+- Gráfico 1 (Barras): Faturamento Bruto vs. Investimento Inicial por Bairro.
+- Gráfico 2 (Dispersão Bolhas): Eixo X (Renda), Eixo Y (População), Tamanho (Concorrência), Cor (Zona).
+- Gráfico 3 (Barras Horizontais Heatmap): Custo do M² de Aluguel por Bairro.
 
-#### C. Gráficos Interativos (Plotly Express)
-- Gráfico 1 (Barras): Faturamento Bruto vs. Investimento Inicial por Bairro (ordenado pelo maior faturamento).
-- Gráfico 2 (Dispersão/Bolhas): Renda Média Mensal (Eixo X) vs. População Estimada (Eixo Y), com o tamanho da bolha representando a `qtd_concorrentes_diretos` e a cor representando a `zona`.
-- Gráfico 3 (Barras Horizontais): Custo do M² de Aluguel por Bairro.
+#### D. Diagnóstico Estratégico e 5 Forças de Porter (Itens 108, 109, 110)
+Use `st.columns(3)` para listar em formato de texto estruturado:
+- Coluna 1: **Vantagens:** Consumo essencial/recorrente; alto volume de vendas; operação multicanal.
+- Coluna 2: **Desvantagens:** Alto investimento inicial; margem de lucro espremida; alto custo de segurança e perdas.
+- Coluna 3: **Barreiras de Entrada:** Concorrência consolidada localmente; custo logístico para abastecer a ilha; necessidade de grandes áreas físicas (terrenos escassos).
+- Adicione um `st.expander` para as **5 Forças de Porter**, destacando: Rivalidade (Altíssima), Barganha de Clientes (Alta), Barganha de Fornecedores (Média), Novos Entrantes (Baixa), Substitutos (Baixa).
 
-#### D. Análise Estratégica: As 5 Forças de Porter
-ATENÇÃO: NÃO inclua Análise SWOT (diretriz explícita do projeto). Crie uma seção visual formatada com `st.expander` ou cards exibindo a análise qualitativa do setor em São Luís:
-1. Rivalidade entre concorrentes (Altíssima - Disputa de preços com líderes regionais e nacionais).
-2. Poder de barganha dos clientes (Alto - Sensibilidade a preço no atacarejo).
-3. Poder de barganha dos fornecedores (Médio - Dependência de grandes indústrias, equilibrada pelo volume).
-4. Ameaça de novos entrantes (Baixa/Média - Alta barreira de capital e custo logístico de ilha).
-5. Ameaça de substitutos (Baixa - Alimento é essencial; substituição ocorre apenas de canal/mercadinho).
-
-#### E. Matriz de Tomada de Decisão e Recomendação Final
-- Exiba o DataFrame final processado (tabela limpa e formatada com valores monetários em R$).
-- Um destaque visual (`st.success`, `st.warning` ou `st.error`) mostrando a Recomendação Final do bairro selecionado no filtro, justificando com base no Payback, Logística (distância do CD) e Concorrência.
+#### E. Decisão, Localização e Recomendação Final (Itens 104, 111, 112, 113)
+- Apresente o DataFrame final processado.
+- Crie um card de destaque dinâmico de Recomendação baseado no bairro selecionado no filtro.
+- Se a viabilidade for "Viável", exiba: "Recomendação: Expansão APROVADA para [Bairro]. Justificativa: Equilíbrio entre custo logístico reduzido e concorrência administrável, gerando retorno sobre investimento dentro de parâmetros aceitáveis."
+- Se o Bairro for "São Cristovao" ou "Centro", destaque explicitamente no texto a indicação de que são as **localizações recomendadas**.
 
 ### 4. REQUISITOS TÉCNICOS
-- Use tipagem e documentação limpa no código.
-- Formate todos os números para o padrão brasileiro de moeda (R$ 1.000.000,00) nas legendas e tooltips dos gráficos.
-- Código 100% executável, sem blocos de marcadores de posição (placeholders).
+- Código limpo, sem placeholders, pronto para rodar.
+- Números formatados em Reais (R$ 1.000.000,00) e decimais com vírgula nas labels e tooltips.
+- Layout responsivo, sem scroll horizontal quebrando a página (otimizado para impressão em PDF).

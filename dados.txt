@@ -1,11 +1,11 @@
 bairro,zona,populacao_estimada,renda_media_mensal,qtd_concorrentes_diretos,custo_m2_aluguel,distancia_cd_km,fluxo_veiculos,ticket_medio_estimado,clientes_mes_estimado,faturamento_bruto_mensal,investimento_inicial_milhoes
-Cidade Operaria,Leste,120000,2100.00,8,35.00,12.5,Alto,180.00,35000,6300000.00,22.5
-Cohab,Sul,85000,2800.00,5,45.00,10.0,Alto,200.00,28000,5600000.00,25.0
-Renascenca,Norte,35000,8500.00,3,120.00,18.0,Medio,320.00,12000,3840000.00,18.0
-Turu,Norte,90000,3400.00,6,60.00,15.5,Alto,220.00,30000,6600000.00,28.0
-Centro,Central,40000,2500.00,4,50.00,8.0,Alto,150.00,45000,6750000.00,15.0
-Anjo da Guarda,Itaqui-Bacanga,75000,1800.00,3,25.00,5.0,Medio,160.00,20000,3200000.00,16.5
-Cohama,Sul,60000,4500.00,4,75.00,11.0,Alto,250.00,22000,5500000.00,24.0
-Sao Cristovao,Sul,45000,2600.00,2,40.00,7.5,Medio,190.00,18000,3420000.00,19.0
-Coroadinho,Central,65000,1600.00,2,20.00,9.0,Baixo,140.00,15000,2100000.00,14.0
-Olho d'Agua,Norte,25000,7200.00,1,90.00,20.0,Medio,350.00,8000,2800000.00,16.0
+Cidade Operaria,Leste,42000,2100.00,8,35.00,12.5,Alto,180.00,25000,4500000.00,22.5
+Cohab,Sul,38000,2800.00,5,45.00,10.0,Alto,200.00,22000,4400000.00,25.0
+Renascenca,Norte,12000,8500.00,3,120.00,18.0,Medio,320.00,8000,2560000.00,18.0
+Turu,Norte,58000,3400.00,6,60.00,15.5,Alto,220.00,28000,6160000.00,28.0
+Centro,Central,22000,2500.00,4,50.00,8.0,Alto,150.00,30000,4500000.00,15.0
+Anjo da Guarda,Itaqui-Bacanga,35000,1800.00,3,25.00,5.0,Medio,160.00,18000,2880000.00,16.5
+Cohama,Sul,26000,4500.00,4,75.00,11.0,Alto,250.00,15000,3750000.00,24.0
+Sao Cristovao,Sul,29000,2600.00,2,40.00,7.5,Medio,190.00,16000,3040000.00,19.0
+Coroadinho,Central,53000,1600.00,2,20.00,9.0,Baixo,140.00,20000,2800000.00,14.0
+Olho d'Agua,Norte,11000,7200.00,1,90.00,20.0,Medio,350.00,6000,2100000.00,16.0
